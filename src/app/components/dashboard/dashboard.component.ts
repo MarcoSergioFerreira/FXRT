@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  public faLineChart = faChartLine;
+
+  constructor(
+    public exchangeRateService: ExchangeRateService
+  ) { }
 
   ngOnInit(): void {
   }

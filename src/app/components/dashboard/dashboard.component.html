@@ -1,8 +1,14 @@
+<mat-toolbar>
+    <span>Crypto Search Tool <i class="fa fa-line-chart" aria-hidden="true"></i></span>
+</mat-toolbar>
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col">
-            <p>dashboard works!</p>
             <app-form></app-form>
+        </div>
+    </div>
+    <div class="row mt-4 h-100" *ngIf="exchangeRateService.rateData$ | async">
+        <div class="col-10 offset-1">
             <app-chart></app-chart>
         </div>
     </div>

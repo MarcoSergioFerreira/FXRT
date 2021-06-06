@@ -1,1 +1,22 @@
-<p>chart works!</p>
+<!-- [view]="[1000,400]" -->
+<div class="row h-50">
+  <div class="col bg-light rounded mx-4">
+    <ngx-charts-line-chart 
+        [results]="[{name: exchangeRateService.selectedCrypto, series: (exchangeRateService.rateData$ | async)}]"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Date'"
+        [yAxisLabel]="'Value (USD)'"
+        [yAxisTickFormatting]='formatToCurrency'
+        [gradient]="true"
+        >
+        <!-- [legendTitle]="exchangeRateService.selectedCrypto" -->
+        <!-- [legend]="true" -->
+        <!-- <ng-template #tooltipTemplate let-model="model">
+          <h2>{{ model.tooltipText }}</h2>
+        </ng-template> -->
+    </ngx-charts-line-chart>
+  </div>
+</div>
