@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { min } from 'rxjs/operators';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 @Component({
   selector: 'app-form',
@@ -14,6 +15,9 @@ export class FormComponent implements OnInit {
     end: new FormControl()
   });
 
+  public today = new Date();
+  public startDate: Date = new Date();
+
 
   constructor(
     public exchangeRateService: ExchangeRateService
@@ -23,11 +27,11 @@ export class FormComponent implements OnInit {
   }
 
   public check() {
-    console.log("🚀 ~ file: form.component.ts ~ line 37 ~ FormComponent ~ setSearchData ~ this.searchData.value.currency", this.searchData)
+    // console.log("🚀 ~ file: form.component.ts ~ line 37 ~ FormComponent ~ setSearchData ~ this.searchData.value.currency", this.searchData)
   }
 
   public setSearchData(): void {
-    console.log("🚀 ~ file: form.component.ts ~ line 37 ~ FormComponent ~ setSearchData ~ this.searchData.value.currency", this.searchData)
+    // console.log("🚀 ~ file: form.component.ts ~ line 37 ~ FormComponent ~ setSearchData ~ this.searchData.value.currency", this.searchData)
     // Weird workaround becuase mat-datepicker is always required, even if its not
     // https://github.com/angular/components/issues/9942
     if (!this.searchData.controls['end'].pristine && !this.searchData.controls['end'].value) {
@@ -40,6 +44,12 @@ export class FormComponent implements OnInit {
         this.searchData.value.end ? new Date(this.searchData.value.end).toISOString() : undefined,
       )
     }
+  }
+
+  public setStartDate(startDate: Date): void {
+    // console.log("🚀 ~ file: form.component.ts ~ line 50 ~ FormComponent ~ setStartDate ~ startDate", startDate)
+    this.startDate = startDate;
+    // console.log("🚀 ~ file: form.component.ts ~ line 52 ~ FormComponent ~ setStartDate ~ this.startDate", this.startDate)
   }
 
 }

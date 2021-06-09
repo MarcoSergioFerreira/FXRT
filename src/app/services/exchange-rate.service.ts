@@ -35,7 +35,7 @@ export class ExchangeRateService {
         map((currencies: Currency[]) => currencies.filter(currency => currency.logo_url))
       )
       .subscribe((currenciesRes: Currency[]) => {
-        console.log("🚀 ~ file: exchange-rate.service.ts ~ line 25 ~ ExchangeRateService ~ .subscribe ~ currenciesRes", currenciesRes);
+        // console.log("🚀 ~ file: exchange-rate.service.ts ~ line 25 ~ ExchangeRateService ~ .subscribe ~ currenciesRes", currenciesRes);
         this.currencies.next(currenciesRes);
       });
   }
@@ -62,10 +62,10 @@ export class ExchangeRateService {
     start: string,
     end?: string,
   ) {
-    console.log("🚀 ~ file: exchange-rate.service.ts ~ line 59 ~ ExchangeRateService ~ start", start)
+    // console.log("🚀 ~ file: exchange-rate.service.ts ~ line 59 ~ ExchangeRateService ~ start", start)
     this.queryParams = this.queryParams.set('currency', currency);
     this.queryParams = this.queryParams.set('start', start);
-    console.log("🚀 ~ file: exchange-rate.service.ts ~ line 62 ~ ExchangeRateService ~ this.queryParams ", this.queryParams )
+    // console.log("🚀 ~ file: exchange-rate.service.ts ~ line 62 ~ ExchangeRateService ~ this.queryParams ", this.queryParams )
     if (end) this.queryParams = this.queryParams.set('end', end);
     this.selectedCryptoName = currencyName;
     this.getRateData();
@@ -75,7 +75,7 @@ export class ExchangeRateService {
     this.http.get<RateData[]>(`${this.base_url}/exchange-rates/history`, { params: this.queryParams })
       .pipe(
         map((data: RateData[]) => {
-          console.log("🚀 ~ file: exchange-rate.service.ts ~ line 60 ~ ExchangeRateService ~ map ~ data", data)
+          // console.log("🚀 ~ file: exchange-rate.service.ts ~ line 60 ~ ExchangeRateService ~ map ~ data", data)
           // const MONTHLY_DATA = data.filter(data => { new Date(data.timestamp).getDay() === 1 })
           return data
             .filter(data => new Date(data.timestamp).getDate() === 1)
@@ -92,7 +92,7 @@ export class ExchangeRateService {
         })
       )
       .subscribe(data => {
-        console.log("🚀 ~ file: exchange-rate.service.ts ~ line 35 ~ ExchangeRateService ~ getRateData ~ data", data);
+        // console.log("🚀 ~ file: exchange-rate.service.ts ~ line 35 ~ ExchangeRateService ~ getRateData ~ data", data);
         this.hasSearched.next(true);
         this.rateData.next(data);
       });

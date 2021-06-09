@@ -7,7 +7,7 @@ export const environment = {
 
   nomics: {
     API_KEY: `4ace6a60cc52e62b71d396048d0e32204929f195`,
-    currencyIds: `BTC,ETH,LTC,ADA,DOT,BCH,XLM,LINK,BNB,USDT,XMR`
+    currencyIds: `BTC,ETH,BNB,USDT,USDC,BUSD,WBTC,TRX`
   }
 };
 

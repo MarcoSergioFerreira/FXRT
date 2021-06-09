@@ -18,13 +18,13 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card'
 import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatIconModule } from '@angular/material/icon'
 
 // Components
 import { AppComponent } from './app.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormComponent } from './components/form/form.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -41,14 +41,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     HttpClientModule,
     ReactiveFormsModule,
     NgxChartsModule,
-    AngularFontAwesomeModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [
     MatDatepickerModule,
