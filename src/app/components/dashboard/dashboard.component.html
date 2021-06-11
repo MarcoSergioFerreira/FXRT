@@ -4,12 +4,12 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col">
-            <app-form></app-form>
+            <app-form (search)="search($event)"></app-form>
         </div>
     </div>
     <div class="row mt-4 h-100" *ngIf="exchangeRateService.rateData$ | async">
         <div class="col-10 offset-1 px-4">
-            <app-chart></app-chart>
+            <app-chart [chartName]='exchangeRateService.selectedCrypto' [rateData$]='exchangeRateService.rateData$'></app-chart>
         </div>
     </div>
 </div>

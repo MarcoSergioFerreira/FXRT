@@ -15,4 +15,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  search(value: any) {
+    this.exchangeRateService.setSearchData(value.currency, value.currencyName, value.start, value.end);
+  }
+
 }

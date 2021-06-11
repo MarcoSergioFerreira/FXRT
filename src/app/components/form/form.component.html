@@ -1,61 +1,57 @@
 <div class="row" [ngClass]="{
-        'justify-content-center': !(exchangeRateService.hasSearched$ | async)
+        'justify-content-center': !hasSearched
     }">
-    <div class="col" [ngClass]="{
-            'col-auto': !(exchangeRateService.hasSearched$ | async),
-            'align-self-center': !(exchangeRateService.hasSearched$ | async)
+  <div class="col" [ngClass]="{
+            'col-auto': !hasSearched,
+            'align-self-center': !hasSearched
         }">
-        <mat-card>
-            <h1 class="heading">What would you like to search for?</h1>
-            <form class="d-flex" [ngClass]="{ 
-                    'p-4': !(exchangeRateService.hasSearched$ | async),
-                    'flex-column': !(exchangeRateService.hasSearched$ | async),
-                    'justify-content-around': exchangeRateService.hasSearched$ | async
-                 }" [formGroup]="searchData" (ngSubmit)="setSearchData()">
+    <mat-card>
+      <h1 class="heading">What would you like to search for?</h1>
+      <form [fxLayout]="{hasSearched ? 'row' : 'col'}" fxLayoutGap="25px grid"  [formGroup]="searchData" (ngSubmit)="setSearchData()">
 
-                <!-- Currency -->
-                <mat-form-field>
-                    <mat-label>Crypto</mat-label>
-                    <mat-select formControlName='currency'>
-                        <mat-option *ngFor="let currency of exchangeRateService.currencies$ | async"
-                            [value]="{name: currency.name, id: currency.id}">
-                            <img height="30px" src="{{currency.logo_url}}"> {{ currency.name }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="!searchData.get('currenct')?.valid && searchData.get('currency')?.touched">
-                        Currency.
-                    </mat-error>
-                </mat-form-field>
-                <!-- Start -->
-                <mat-form-field>
-                    <mat-label>From when?</mat-label>
-                    <input matInput [matDatepicker]="startDate" formControlName="start" [max]="today"
-                        (dateChange)="setStartDate($event.value)">
-                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                    <mat-datepicker #startDate startView="year"></mat-datepicker>
-                    <mat-error *ngIf="!searchData.get('start')?.valid && searchData.get('start')?.touched">
-                        Start date required.
-                    </mat-error>
-                </mat-form-field>
-                <!-- End -->
-                <mat-form-field>
-                    <mat-label>Until?</mat-label>
-                    <input matInput [matDatepicker]="endDate" formControlName="end"
-                        [min]="searchData.controls['start'].value" [max]="today">
-                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                    <mat-datepicker #endDate startView="year"></mat-datepicker>
-                    <mat-error *ngIf="searchData.get('end')?.hasError('incorrect') && searchData.get('end')?.touched">
-                        Invalid date
-                    </mat-error>
-                </mat-form-field>
+        <!-- Currency -->
+        <mat-form-field>
+          <mat-label>Crypto</mat-label>
+          <mat-select formControlName='currency' required>
+            <mat-option *ngFor="let currency of exchangeRateService.currencies$ | async"
+              [value]="{name: currency.name, id: currency.id}">
+              <img height="30px" src="{{currency.logo_url}}"> {{ currency.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!searchData.get('currency')?.valid && searchData.get('currency')?.touched">
+            Currency.
+          </mat-error>
+        </mat-form-field>
+        <!-- Start -->
+        <mat-form-field>
+          <mat-label>From when?</mat-label>
+          <input matInput [matDatepicker]="startDate" formControlName="start" [max]="today"
+            (dateChange)="setStartDate($event.value)" required>
+          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate startView="year"></mat-datepicker>
+          <mat-error *ngIf="!searchData.get('start')?.valid && searchData.get('start')?.touched">
+            Start date required.
+          </mat-error>
+        </mat-form-field>
+        <!-- End -->
+        <mat-form-field>
+          <mat-label>Until?</mat-label>
+          <input matInput [matDatepicker]="endDate" formControlName="end" [min]="searchData.controls['start'].value"
+            [max]="today">
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate startView="year"></mat-datepicker>
+          <mat-error *ngIf="searchData.get('end')?.hasError('incorrect') && searchData.get('end')?.touched">
+            Invalid date
+          </mat-error>
+        </mat-form-field>
 
-                <!-- Weird workaround becuase mat-datepicker is always required, even if its not -->
-                <!-- https://github.com/angular/components/issues/9942 -->
-                <button mat-raised-button type="submit" color="primary"
-                    [disabled]="!searchData.get('currency')?.valid || !searchData.get('start')?.valid">Search</button>
-            </form>
-        </mat-card>
-        
-        <a class="attribution" href="https://nomics.com"  target="_blank">Crypto Market Cap & Pricing Data Provided By Nomics to https://nomics.com. </a>
-    </div>
+        <!-- Weird workaround becuase mat-datepicker is always required, even if its not -->
+        <!-- https://github.com/angular/components/issues/9942 -->
+        <button mat-raised-button type="submit" color="primary" [disabled]="!searchData.valid">Search</button>
+      </form>
+    </mat-card>
+
+    <a class="attribution" href="https://nomics.com" target="_blank">Crypto Market Cap & Pricing Data Provided By Nomics
+      to https://nomics.com. </a>
+  </div>
 </div>
