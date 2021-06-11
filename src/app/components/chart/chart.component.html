@@ -4,8 +4,8 @@
     <!-- The following div is to contain the ngx-chart -->
     <!-- https://github.com/swimlane/ngx-charts/issues/225 -->
     <div class="h-100">
-      <ngx-charts-line-chart 
-          [results]="[{name: exchangeRateService.selectedCrypto, series: (exchangeRateService.rateData$ | async)}]"
+      <ngx-charts-line-chart
+          [results]="[{name: chartName, series: (rateData$ | async)}]"
           [xAxis]="true"
           [yAxis]="true"
           [showXAxisLabel]="true"

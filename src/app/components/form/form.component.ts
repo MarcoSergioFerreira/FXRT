@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { min } from 'rxjs/operators';
 import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
 @Component({
@@ -7,23 +8,30 @@ import { ExchangeRateService } from 'src/app/services/exchange-rate.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
+  @Output() search: EventEmitter<any> = new EventEmitter();
 
   public searchData = new FormGroup({
-    currency: new FormControl(['']),
+    currency: new FormControl(['', Validators.compose([Validators.required])]),
     start: new FormControl([new Date]),
     end: new FormControl()
   });
 
   public today = new Date();
   public startDate: Date = new Date();
-
+  public hasSearched: boolean = false;
+  public hasSearchedSubscription: Subscription | undefined;
 
   constructor(
     public exchangeRateService: ExchangeRateService
   ) { }
 
   ngOnInit(): void {
+    this.hasSearchedSubscription = this.exchangeRateService.hasSearched$.subscribe(value => this.hasSearched = value);
+  }
+
+  ngOnDestroy() {
+    if (this.hasSearchedSubscription) { this.hasSearchedSubscription.unsubscribe(); }
   }
 
   public check() {
@@ -37,12 +45,12 @@ export class FormComponent implements OnInit {
     if (!this.searchData.controls['end'].pristine && !this.searchData.controls['end'].value) {
       this.searchData.controls['end'].setErrors({ 'incorrect': true });
     } else {
-      this.exchangeRateService.setSearchData(
-        this.searchData.value.currency.id,
-        this.searchData.value.currency.name,
-        new Date(this.searchData.value.start).toISOString(),
-        this.searchData.value.end ? new Date(this.searchData.value.end).toISOString() : undefined,
-      )
+      this.search.next({
+        currency: this.searchData.value.currency.id,
+        currencyName: this.searchData.value.currency.name,
+        start: new Date(this.searchData.value.start).toISOString(),
+        end: this.searchData.value.end ? new Date(this.searchData.value.end).toISOString() : undefined,
+      });
     }
   }
 
